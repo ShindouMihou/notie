@@ -5,7 +5,9 @@ Capacitor.js, this was originally named "AreaTwo Notie" but was renamed as simpl
 to Google Keep Notes, but is completely offline.
 
 ## Demo
-<!-- TODO -->
+| Demo                                                                                                 |
+|------------------------------------------------------------------------------------------------------|
+| ![image](https://github.com/ShindouMihou/notie/assets/69381903/9ebdf14a-5049-417a-acaf-8a576a13f59d) |
 
 ## Installation
 
