@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">notie</string>
+    <string name="title_activity_main">notie</string>
+    <string name="package_name">pw.mihou.notie</string>
+    <string name="custom_url_scheme">pw.mihou.notie</string>
+</resources>
