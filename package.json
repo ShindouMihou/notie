@@ -28,14 +28,19 @@
   "type": "module",
   "dependencies": {
     "@capacitor/android": "^5.3.0",
+    "@capacitor/camera": "^5.0.7",
     "@capacitor/cli": "^5.3.0",
     "@capacitor/core": "^5.3.0",
+    "@capacitor/haptics": "^5.0.6",
     "@capacitor/preferences": "^5.0.6",
+    "@capacitor/status-bar": "^5.0.6",
+    "@capacitor/toast": "^5.0.6",
     "@steeze-ui/lucide-icons": "^1.1.1",
     "@steeze-ui/radix-icons": "^1.1.2",
     "@steeze-ui/svelte-icon": "^1.5.0",
     "javascript-time-ago": "^2.5.9",
     "realm": "^12.1.0",
+    "svelte-gestures": "^1.5.2",
     "timeago.js": "^4.0.2"
   }
 }

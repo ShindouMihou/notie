@@ -13,6 +13,8 @@
 
     import { format } from 'timeago.js'
     import {onDestroy, onMount} from "svelte";
+    import {Toast} from "@capacitor/toast";
+    import {Haptics} from "@capacitor/haptics";
 
     export let note: Note = {
         id: $lastNote + 1,
@@ -65,26 +67,42 @@
     }
 
     async function archive() {
+        await Haptics.impact()
         if (!isArchived) {
             $archived = [note.id, ...$archived]
-            $pinned = $pinned.filter(value => value !== note.id)
+
+            if (isPinned) {
+                $pinned = $pinned.filter(value => value !== note.id)
+                await Toast.show({ text: "Archived and unpinned note." })
+            } else {
+                await Toast.show({ text: "Archived note." })
+            }
 
             console.info('archived', $archived)
             setTimeout(go_back, 250)
         } else {
             $archived = $archived.filter(value => value !== note.id)
+            await Toast.show({ text: "Unarchived note." })
             console.info('unarchived', $archived)
         }
     }
 
     async function pin() {
+        await Haptics.impact()
         if (!isPinned) {
             $pinned = [note.id, ...$pinned]
-            $archived = $archived.filter(value => value !== note.id)
+
+            if (isArchived) {
+                $archived = $archived.filter(value => value !== note.id)
+                await Toast.show({ text: "Pinned and unarchived note." })
+            } else {
+                await Toast.show({ text: "Pinned note." })
+            }
 
             console.info('pinned', $pinned)
         } else {
             $pinned = $pinned.filter(value => value !== note.id)
+            await Toast.show({ text: "Unpinned note." })
             console.info('unpinned', $pinned)
         }
     }
