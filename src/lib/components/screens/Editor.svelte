@@ -15,6 +15,9 @@
     import {onDestroy, onMount} from "svelte";
     import {Toast} from "@capacitor/toast";
     import {Haptics} from "@capacitor/haptics";
+    import {App as CapacitorApp} from "@capacitor/app";
+    import type {PluginListenerHandle} from "@capacitor/core";
+    import {page} from "$app/stores";
 
     export let note: Note = {
         id: $lastNote + 1,
@@ -51,10 +54,12 @@
     let saveInterval: NodeJS.Timeout
 
     let contentChanged: boolean = false
+    let backlistener: PluginListenerHandle
 
     onMount(async () => {
         await save()
 
+        backlistener = await CapacitorApp.addListener('backButton', go_back)
         lastEditedInterval = setInterval(async () => {
             lastEdited = format(note.updated_at)
         }, 10_000)
@@ -65,11 +70,14 @@
     onDestroy(() => {
         clearInterval(lastEditedInterval)
         clearInterval(saveInterval)
+        backlistener.remove()
     })
 
     function go_back() {
         document.getElementById('go_back')?.click()
     }
+
+    const referrer = $page.url.searchParams.get('referrer') ?? '/'
 
     async function archive() {
         await Haptics.impact()
@@ -121,7 +129,7 @@
 
 <Layout>
     <div class="py-2 flex flex-row justify-between items-center" slot="header">
-        <a href="/" id="go_back" class="hidden"><p>.</p></a>
+        <a href="/{referrer}" id="go_back" class="hidden"><p>.</p></a>
         <div class="flex flex-row gap-6 items-center pr-4">
             <button on:click={back}>
                 <Icon src={ChevronLeft} class="w-6 text-[#9F8E7E]"/>
