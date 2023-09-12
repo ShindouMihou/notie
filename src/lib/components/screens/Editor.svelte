@@ -73,6 +73,9 @@
 
     async function archive() {
         await Haptics.impact()
+        if ($notes.find(value => value === note.id) == null) {
+            await save()
+        }
         if (!isArchived) {
             $archived = [note.id, ...$archived]
 
@@ -94,6 +97,9 @@
 
     async function pin() {
         await Haptics.impact()
+        if ($notes.find(value => value === note.id) == null) {
+            await save()
+        }
         if (!isPinned) {
             $pinned = [note.id, ...$pinned]
 
