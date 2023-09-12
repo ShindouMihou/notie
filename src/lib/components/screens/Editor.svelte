@@ -25,6 +25,9 @@
     }
 
     async function save() {
+        if (!contentChanged) {
+            return
+        }
         note.updated_at = new Date()
         await Preferences.set({ key: 'notes.' + note.id, value: JSON.stringify(note) })
         if ($notes.find(value => value === note.id) == null) {
@@ -46,6 +49,8 @@
 
     let lastEditedInterval: NodeJS.Timeout
     let saveInterval: NodeJS.Timeout
+
+    let contentChanged: boolean = false
 
     onMount(async () => {
         await save()
@@ -137,6 +142,7 @@
         <input type="text"
                class="font-semibold text-4xl placeholder-[#3a3a3a] bg-transparent outline-none w-full"
                placeholder="Title"
+               on:input={() => contentChanged = true}
                bind:value={note.title}
         />
         <p class="text-[#3a3a3a] font-light text-sm pb-4">Last edited {lastEdited}</p>
@@ -144,6 +150,7 @@
                 class="font-light text-lg bg-transparent outline-none resize-none w-full min-h-screen"
                 draggable="false"
                 placeholder="Whatever."
+                on:input={() => contentChanged = true}
                 bind:value={note.contents}
         />
     </div>
