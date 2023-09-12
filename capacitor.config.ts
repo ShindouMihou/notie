@@ -5,9 +5,7 @@ const config: CapacitorConfig = {
   appName: 'notie',
   webDir: 'build',
   server: {
-    androidScheme: 'https',
-    url: "http://192.168.0.186:5173",
-    cleartext: true
+    androidScheme: 'https'
   }
 };
 
