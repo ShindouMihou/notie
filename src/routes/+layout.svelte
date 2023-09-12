@@ -9,7 +9,10 @@
     let loading = true
 
     onMount(async () => {
-        await StatusBar.setBackgroundColor({ color: '#1E1E1E' })
+        try {
+            await StatusBar.setBackgroundColor({ color: '#1E1E1E' })
+        } catch (e) {
+        }
         await openStores()
         loading = false
     })

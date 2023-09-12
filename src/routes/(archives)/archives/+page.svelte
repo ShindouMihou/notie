@@ -10,7 +10,9 @@
 
     let archivedNotes: Note[] = []
 
-    onMount(async () => {
+    archived.subscribe(_ => loadArchives())
+
+    async function loadArchives() {
         let temp: Note[] = []
         for (const noteId of $archived) {
             const note = await getNoteById(noteId)
@@ -18,9 +20,13 @@
                 console.info('not found', noteId)
                 continue
             }
-            temp = [note, ...archivedNotes]
+            temp = [note, ...temp]
         }
         archivedNotes = temp
+    }
+
+    onMount(async () => {
+        await loadArchives()
     })
 </script>
 

@@ -8,24 +8,19 @@
     let pinnedNotes: Note[] = []
     let normalNotes: Note[] = []
 
-    onMount(async () => {
-        let temp: Note[] = []
-        for (const noteId of $pinned) {
-            const note = await getNoteById(noteId)
-            if (note == null) {
-                continue
-            }
-            temp = [note, ...pinnedNotes]
-        }
-        pinnedNotes = temp
+    notes.subscribe(_ => loadNotes())
+    pinned.subscribe(_ => loadPinned())
 
-        temp = []
+    async function loadNotes() {
+        let temp: Note[] = []
         for (const noteId of $notes) {
             console.info(noteId)
             if ($pinned.find(value => noteId === value) != null) {
+                console.info('skipping pinned', noteId)
                 continue
             }
             if ($archived.find(value => noteId === value) != null) {
+                console.info('skipping', noteId)
                 continue
             }
             const note = await getNoteById(noteId)
@@ -33,9 +28,27 @@
                 console.info('not found', noteId)
                 continue
             }
-            temp = [note, ...normalNotes]
+            console.info(note)
+            temp = [note, ...temp]
         }
         normalNotes = temp
+    }
+
+    async function loadPinned() {
+        let temp: Note[] = []
+        for (const noteId of $pinned) {
+            const note = await getNoteById(noteId)
+            if (note == null) {
+                continue
+            }
+            temp = [note, ...temp]
+        }
+        pinnedNotes = temp
+    }
+
+    onMount(async () => {
+        await loadPinned()
+        await loadNotes()
     })
 </script>
 
