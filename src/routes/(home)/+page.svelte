@@ -9,14 +9,17 @@
     let normalNotes: Note[] = []
 
     onMount(async () => {
+        let temp: Note[] = []
         for (const noteId of $pinned) {
             const note = await getNoteById(noteId)
             if (note == null) {
                 continue
             }
-            pinnedNotes = [note, ...pinnedNotes]
+            temp = [note, ...pinnedNotes]
         }
+        pinnedNotes = temp
 
+        temp = []
         for (const noteId of $notes) {
             console.info(noteId)
             if ($pinned.find(value => noteId === value) != null) {
@@ -30,8 +33,9 @@
                 console.info('not found', noteId)
                 continue
             }
-            normalNotes = [note, ...normalNotes]
+            temp = [note, ...normalNotes]
         }
+        normalNotes = temp
     })
 </script>
 

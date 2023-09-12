@@ -11,14 +11,16 @@
     let archivedNotes: Note[] = []
 
     onMount(async () => {
+        let temp: Note[] = []
         for (const noteId of $archived) {
             const note = await getNoteById(noteId)
             if (note == null) {
                 console.info('not found', noteId)
                 continue
             }
-            archivedNotes = [note, ...archivedNotes]
+            temp = [note, ...archivedNotes]
         }
+        archivedNotes = temp
     })
 </script>
 
