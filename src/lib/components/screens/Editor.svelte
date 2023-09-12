@@ -133,7 +133,7 @@
             </button>
         </div>
     </div>
-    <div slot="content" class="p-4">
+    <div slot="content" class="p-2 py-4">
         <input type="text"
                class="font-semibold text-4xl placeholder-[#3a3a3a] bg-transparent outline-none w-full"
                placeholder="Title"
