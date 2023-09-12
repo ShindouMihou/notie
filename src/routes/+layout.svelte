@@ -4,10 +4,12 @@
     import {onMount} from "svelte";
     import {slide,fade} from "svelte/transition"
     import Loading from "$lib/components/screens/Loading.svelte";
+    import {StatusBar} from "@capacitor/status-bar";
 
     let loading = true
 
     onMount(async () => {
+        await StatusBar.hide()
         await openStores()
         loading = false
     })
